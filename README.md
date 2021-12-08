@@ -11,3 +11,11 @@ Nessa aula vimos:
 - como transacionar dados
 - queries simples
 - o banco e seus snapshots
+
+## Aula 02
+
+Nessa aula vimos:
+
+- db:retract
+- db:add funcionando também como atualização de um valor
+- o uso do db:id como identificador único de uma entidade

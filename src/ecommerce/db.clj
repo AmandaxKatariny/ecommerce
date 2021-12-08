@@ -5,7 +5,6 @@
 (def db-uri "datomic:dev://localhost:4334/ecommerce")
 
 (defn abre-conexao []
-
   (d/create-database db-uri)
   (d/connect db-uri))
 
@@ -29,3 +28,20 @@
 
 (defn cria-schema [conn]
   (d/transact conn schema))
+
+(defn todos-os-produtos [db]
+  (d/q '[:find ?entidade
+         :where [?entidade :produto/nome]] db))
+
+(defn todos-os-produtos-por-slug-fixo-q [db]
+  (d/q '[:find ?entidade
+         :where [?entidade :produto/slug "/computador-novo"]] db))
+
+(defn todos-os-produtos-por-slug-fixo [db]
+  (d/q todos-os-produtos-por-slug-fixo-q db))
+
+
+(defn todos-os-produtos-por-slug [db slug]
+  (d/q '[:find ?entidade
+         :in $ ?slug-a-ser-buscado
+         :where [?entidade :produto/slug ?slug-a-ser-buscado]] db slug))

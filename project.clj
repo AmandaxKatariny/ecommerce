@@ -8,3 +8,5 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [com.datomic/datomic-pro "1.0.6344"]]
   :repl-options {:init-ns ecommerce.core})
+
+;[:username "amanda.katariny@nubank.com.br"] [:password "3b42327d-f973-4121-b474-c010edac1845"]
