@@ -27,7 +27,7 @@ Nessa aula vimos:
 
 - como fazer queries por entidades
 - como buscar por atributo
-- como extrair atributo
+- como extrair atributo'
 - como funciona o binding de variáveis em queries
 
 
@@ -44,3 +44,13 @@ Vimos nessa aula:
 
 - como o Datomic armazena os dados históricos
 - como acessar o banco em um momento do tempo com o `as-of`
+
+
+## Aula 06
+
+Vimos nessa aula:
+
+- definir um plano de ação para suas queries
+- utilizar predicates para filtrar seu dados
+- cardinalidade to many
+- queries e adds em cardinalidade múltipla
