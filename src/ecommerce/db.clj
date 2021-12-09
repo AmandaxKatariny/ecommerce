@@ -85,8 +85,28 @@
   (d/q '[:find ?slug
          :where [_ :produto/slug ?slug]] db))
 
-(defn todos-os-produtos-por-preco [db]
+; est
+(defn todos-os-produtos-por-preco [db preco-minimo-requisitado]
   (d/q '[:find ?nome, ?preco
+         :in $, ?preco-minimo
          :keys nome, preco
          :where [?produto :produto/preco ?preco]
-         [?produto :produto/nome ?nome]] db))
+         [(> ?preco ?preco-minimo)]
+         [?produto :produto/nome ?nome]]
+       db, preco-minimo-requisitado))
+
+; eu tenho 10mil...se eu tenho 1000 produtos com preco > 5000, so 10 produtos com quantidade < 10
+; passar por 10 mil
+;[(> preco  5000)]                                           ; => 5000 datom
+;[(< quantidade 10)]                                         ; => 10 datom
+;
+;; passar por 10 mil
+;[(< quantidade 10)]                                         ; => 10 datom
+;[(> preco  5000)]                                           ; => 10 datom
+;
+; em geral vamos deixar as condicoes da mais restritiva pra menos restritiva...
+; pois o plano de ação somos nós quem tomamos
+
+
+
+
