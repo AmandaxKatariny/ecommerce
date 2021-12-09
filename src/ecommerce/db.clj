@@ -37,6 +37,10 @@
              {:db/ident       :produto/preco
               :db/valueType   :db.type/bigdec
               :db/cardinality :db.cardinality/one
+              :db/doc         "O preço de um produto com precisão monetária"}
+             {:db/ident       :produto/palavra-chave
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/many
               :db/doc         "O preço de um produto com precisão monetária"}])
 
 (defn cria-schema [conn]
@@ -107,6 +111,10 @@
 ; em geral vamos deixar as condicoes da mais restritiva pra menos restritiva...
 ; pois o plano de ação somos nós quem tomamos
 
-
+(defn todos-os-produtos-por-palavra-chave [db palavra-chave-buscada]
+  (d/q '[:find (pull ?produto [*])
+         :in $ ?palavra-chave
+         :where [?produto :produto/palavra-chave ?palavra-chave]]
+       db palavra-chave-buscada))
 
 
