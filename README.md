@@ -29,3 +29,12 @@ Nessa aula vimos:
 - como buscar por atributo
 - como extrair atributo
 - como funciona o binding de variáveis em queries
+
+
+## Aula 04
+
+Vimos nessa aula:
+
+- como buscar atributos com o pull
+- como buscar todos os atributos com o pull
+

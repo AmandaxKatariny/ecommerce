@@ -42,8 +42,14 @@
 (defn cria-schema [conn]
   (d/transact conn schema))
 
+;pull explicito atributo a atriburo
+;(defn todos-os-produtos [db]
+;  (d/q '[:find (pull ?entidade [:produto/nome :produto/preco :produto/slug])
+;         :where [?entidade :produto/nome]] db))
+
+;pull generico
 (defn todos-os-produtos [db]
-  (d/q '[:find ?entidade
+  (d/q '[:find (pull ?entidade [*])
          :where [?entidade :produto/nome]] db))
 
 ; no sql eh comum fazer:
@@ -81,5 +87,6 @@
 
 (defn todos-os-produtos-por-preco [db]
   (d/q '[:find ?nome, ?preco
+         :keys nome, preco
          :where [?produto :produto/preco ?preco]
          [?produto :produto/nome ?nome]] db))
