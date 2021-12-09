@@ -38,3 +38,9 @@ Vimos nessa aula:
 - como buscar atributos com o pull
 - como buscar todos os atributos com o pull
 
+## Aula 05
+
+Vimos nessa aula:
+
+- como o Datomic armazena os dados históricos
+- como acessar o banco em um momento do tempo com o `as-of`
