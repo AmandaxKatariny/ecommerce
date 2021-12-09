@@ -19,3 +19,13 @@ Nessa aula vimos:
 - db:retract
 - db:add funcionando também como atualização de um valor
 - o uso do db:id como identificador único de uma entidade
+
+
+## Aula 03
+
+Nessa aula vimos:
+
+- como fazer queries por entidades
+- como buscar por atributo
+- como extrair atributo
+- como funciona o binding de variáveis em queries
