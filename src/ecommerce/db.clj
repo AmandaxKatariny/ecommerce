@@ -26,7 +26,11 @@
 ; 17 :produto/preco 8888.88    ID_TX     operacao
 
 
-(def schema [{:db/ident       :produto/nome
+(def schema [{:db/ident       :produto/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+             {:db/ident       :produto/nome
               :db/valueType   :db.type/string
               :db/cardinality :db.cardinality/one
               :db/doc         "O nome de um produto"}
@@ -116,5 +120,18 @@
          :in $ ?palavra-chave
          :where [?produto :produto/palavra-chave ?palavra-chave]]
        db palavra-chave-buscada))
+
+; Version 1 - Aula 1
+(defn um-produto-por-dbid [db db-id]
+  (d/pull db '[*] db-id))
+
+(defn um-produto [db produto-id]
+  (d/pull db '[*] [:produto/id produto-id]))
+
+
+
+
+
+
 
 
