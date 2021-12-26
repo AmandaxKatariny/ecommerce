@@ -26,10 +26,9 @@
 ; 17 :produto/preco 8888.88    ID_TX     operacao
 
 
-(def schema [{:db/ident       :produto/id
-              :db/valueType   :db.type/uuid
-              :db/cardinality :db.cardinality/one
-              :db/unique      :db.unique/identity}
+(def schema [
+             ; Produtos
+
              {:db/ident       :produto/nome
               :db/valueType   :db.type/string
               :db/cardinality :db.cardinality/one
@@ -44,18 +43,32 @@
               :db/doc         "O preço de um produto com precisão monetária"}
              {:db/ident       :produto/palavra-chave
               :db/valueType   :db.type/string
-              :db/cardinality :db.cardinality/many
-              :db/doc         "O preço de um produto com precisão monetária"}])
+              :db/cardinality :db.cardinality/many}
+             {:db/ident       :produto/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+
+             ; Categorias
+             {:db/ident       :categoria/nome
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+             {:db/ident       :categoria/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+
+             ])
 
 (defn cria-schema [conn]
   (d/transact conn schema))
 
-;pull explicito atributo a atriburo
+; pull explicito atributo a atributo
 ;(defn todos-os-produtos [db]
 ;  (d/q '[:find (pull ?entidade [:produto/nome :produto/preco :produto/slug])
 ;         :where [?entidade :produto/nome]] db))
 
-;pull generico
+; pull generico, vantagem preguica, desvantagem pode trazer mais do que eu queira
 (defn todos-os-produtos [db]
   (d/q '[:find (pull ?entidade [*])
          :where [?entidade :produto/nome]] db))
@@ -93,15 +106,16 @@
   (d/q '[:find ?slug
          :where [_ :produto/slug ?slug]] db))
 
-; est
+; estou sendo explicito nos campos 1 a 1
 (defn todos-os-produtos-por-preco [db preco-minimo-requisitado]
   (d/q '[:find ?nome, ?preco
          :in $, ?preco-minimo
-         :keys nome, preco
+         :keys produto/nome, produto/preco
          :where [?produto :produto/preco ?preco]
          [(> ?preco ?preco-minimo)]
          [?produto :produto/nome ?nome]]
        db, preco-minimo-requisitado))
+
 
 ; eu tenho 10mil...se eu tenho 1000 produtos com preco > 5000, so 10 produtos com quantidade < 10
 ; passar por 10 mil
@@ -121,7 +135,7 @@
          :where [?produto :produto/palavra-chave ?palavra-chave]]
        db palavra-chave-buscada))
 
-; Version 1 - Aula 1
+
 (defn um-produto-por-dbid [db db-id]
   (d/pull db '[*] db-id))
 
@@ -129,9 +143,7 @@
   (d/pull db '[*] [:produto/id produto-id]))
 
 
-
-
-
-
-
-
+(defn todas-as-categorias [db]
+  (d/q '[:find (pull ?categoria [*])
+         :where [?categoria :categoria/id]]
+       db))
